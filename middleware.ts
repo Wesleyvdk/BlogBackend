@@ -3,7 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(req: NextRequest) {
     const res = NextResponse.next();
 
-    res.headers.set("Access-Control-Allow-Origin", "*"); // Allow all domains or specify one
+    const allowedOrigins = ["https://wesleyvanderkraan.vercel.app"];
+
+    const origin = req.headers.get("origin");
+    if (origin && allowedOrigins.includes(origin)) {
+        res.headers.set("Access-Control-Allow-Origin", origin);
+    }
+
     res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.headers.set(
         "Access-Control-Allow-Headers",
