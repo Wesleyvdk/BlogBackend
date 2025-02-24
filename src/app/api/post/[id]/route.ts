@@ -4,8 +4,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: any } }) {
-    const { id } = params;
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+    const { id } = context.params;
 
     try {
         const post = await prisma.post.delete({
@@ -18,8 +18,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: any }
     }
 }
 
-export async function GET(req: NextRequest, { params }: { params: { id: any } }) {
-    const { id } = params;
+export async function GET(req: NextRequest, context: { params: { id: string } }) {
+    const { id } = context.params;
 
     const post = await prisma.post.findUnique({
         where: { id: Number(id) },

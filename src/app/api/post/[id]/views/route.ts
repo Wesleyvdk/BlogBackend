@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function PUT(req: NextRequest, { params }: { params: { id: any } }) {
-    const { id } = params;
+export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+    const { id } = context.params;
 
     try {
         const post = await prisma.post.update({
