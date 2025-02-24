@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
+    console.log("middleware.ts: Request URL:", req.url);
     const res = NextResponse.next();
 
     // Handle preflight requests (OPTIONS method)
