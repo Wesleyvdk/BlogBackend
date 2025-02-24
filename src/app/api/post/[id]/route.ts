@@ -18,7 +18,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: any }
     }
 }
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { id: any } }) {
     const { id } = params;
 
     const post = await prisma.post.findUnique({
