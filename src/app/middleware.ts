@@ -6,7 +6,8 @@ export function middleware(req: NextRequest) {
 
     // Handle preflight requests (OPTIONS method)
     if (req.method === "OPTIONS") {
-        res.headers.set("Access-Control-Allow-Origin", "https://wesleyvanderkraan.vercel.app"); // Allow specific domain
+        res.headers.append('Access-Control-Allow-Credentials', "true")
+        res.headers.set("Access-Control-Allow-Origin", "*"); // Allow specific domain
         res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         res.headers.set(
             "Access-Control-Allow-Headers",
@@ -16,7 +17,8 @@ export function middleware(req: NextRequest) {
     }
 
     // Set CORS headers for actual requests
-    res.headers.set("Access-Control-Allow-Origin", "https://wesleyvanderkraan.vercel.app"); // Allow specific domain
+    res.headers.append('Access-Control-Allow-Credentials', "true")
+    res.headers.set("Access-Control-Allow-Origin", "*"); // Allow specific domain
     res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.headers.set(
         "Access-Control-Allow-Headers",
