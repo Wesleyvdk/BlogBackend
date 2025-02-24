@@ -8,7 +8,7 @@ export async function DELETE(req: NextRequest, res: NextResponse, context: { par
     const { id } = await context.params;
     res.headers.set("Access-Control-Allow-Origin", "*");
     res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    res.headers.set("Access-Control-Allow-Headers", "Origin, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization");
     try {
         const post = await prisma.post.delete({
             where: { id: Number(id) },

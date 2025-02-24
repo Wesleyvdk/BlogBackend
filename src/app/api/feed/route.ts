@@ -8,7 +8,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const { searchParams } = new URL(req.url);
     res.headers.set("Access-Control-Allow-Origin", "*");
     res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    res.headers.set("Access-Control-Allow-Headers", "Origin, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization");
     const searchString = searchParams.get("searchString");
     const skip = Number(searchParams.get("skip")) || undefined;
     const take = Number(searchParams.get("take")) || undefined;
