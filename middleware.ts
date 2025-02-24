@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(req: NextRequest) {
     const res = NextResponse.next();
 
-    res.headers.set("Access-Control-Allow-Origin", "*"); // Allow all domains or specify one
+    res.headers.set("Access-Control-Allow-Origin", "https://wesleyvanderkraan.vercel.app"); // Allow specific domain
     res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.headers.set(
         "Access-Control-Allow-Headers",
