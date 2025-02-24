@@ -14,15 +14,24 @@ export default function ApiRouteCard({ route }: { route: ApiRoute }) {
       </CardHeader>
       <CardContent>
         <div className="flex flex-wrap gap-2">
-          {route.methods.map((method) => (
+          {route.methods.length > 0 ? (
+            route.methods.map((method) => (
+              <Badge
+                key={method}
+                variant="outline"
+                className={`${getMethodColor(method)} font-mono`}
+              >
+                {method}
+              </Badge>
+            ))
+          ) : (
             <Badge
-              key={method}
               variant="outline"
-              className={`${getMethodColor(method)} font-mono`}
+              className="bg-gray-100 text-gray-800 border-gray-300 font-mono"
             >
-              {method}
+              No methods found
             </Badge>
-          ))}
+          )}
         </div>
       </CardContent>
     </Card>
@@ -39,6 +48,12 @@ function getMethodColor(method: string): string {
       return "bg-yellow-100 text-yellow-800 border-yellow-300";
     case "DELETE":
       return "bg-red-100 text-red-800 border-red-300";
+    case "PATCH":
+      return "bg-purple-100 text-purple-800 border-purple-300";
+    case "HEAD":
+      return "bg-indigo-100 text-indigo-800 border-indigo-300";
+    case "OPTIONS":
+      return "bg-pink-100 text-pink-800 border-pink-300";
     default:
       return "bg-gray-100 text-gray-800 border-gray-300";
   }

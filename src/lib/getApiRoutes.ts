@@ -1,5 +1,5 @@
-import { readdirSync, statSync } from 'fs'
-import { join } from 'path'
+import { readdirSync, statSync, readFileSync } from "fs"
+import { join } from "path"
 
 interface ApiRoute {
     path: string
@@ -7,8 +7,8 @@ interface ApiRoute {
 }
 
 export async function getApiRoutes(): Promise<ApiRoute[]> {
-    const apiDirectory = join(process.cwd(), 'src', 'app', 'api')
-    return scanDirectory(apiDirectory, '/api')
+    const apiDirectory = join(process.cwd(), "src", "app", "api")
+    return scanDirectory(apiDirectory, "/api")
 }
 
 function scanDirectory(dir: string, basePath: string): ApiRoute[] {
@@ -20,14 +20,25 @@ function scanDirectory(dir: string, basePath: string): ApiRoute[] {
 
         if (stat.isDirectory()) {
             routes.push(...scanDirectory(filePath, `${basePath}/${file}`))
-        } else if (file === 'route.ts' || file === 'route.js') {
-            // Instead of trying to import the file, we'll assume all methods are available
-            routes.push({
-                path: basePath,
-                methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
-            })
+        } else if (file === "route.ts" || file === "route.js") {
+            const methods = extractMethodsFromFile(filePath)
+            routes.push({ path: basePath, methods })
         }
     })
 
     return routes
 }
+
+function extractMethodsFromFile(filePath: string): string[] {
+    const content = readFileSync(filePath, "utf-8")
+    const methodRegex = /export\s+(?:async\s+)?function\s+(GET|POST|PUT|DELETE|PATCH|HEAD|OPTIONS)\s*\(/g
+    const methods: string[] = []
+    let match
+
+    while ((match = methodRegex.exec(content)) !== null) {
+        methods.push(match[1])
+    }
+
+    return methods
+}
+
