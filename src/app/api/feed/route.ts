@@ -4,8 +4,11 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, res: NextResponse) {
     const { searchParams } = new URL(req.url);
+    res.headers.set("Access-Control-Allow-Origin", "*");
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
     const searchString = searchParams.get("searchString");
     const skip = Number(searchParams.get("skip")) || undefined;
     const take = Number(searchParams.get("take")) || undefined;

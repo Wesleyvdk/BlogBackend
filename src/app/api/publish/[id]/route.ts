@@ -4,8 +4,11 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-export async function PUT(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+export async function PUT(req: NextRequest, res: NextResponse, context: { params: Promise<{ id: string }> }) {
     const { id } = await context.params;
+    res.headers.set("Access-Control-Allow-Origin", "*");
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
     try {
         const postData = await prisma.post.findUnique({
             where: { id: Number(id) },

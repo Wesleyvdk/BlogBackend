@@ -4,7 +4,10 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, res: NextResponse) {
+    res.headers.set("Access-Control-Allow-Origin", "*");
+    res.headers.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
     try {
         const { email, password } = await req.json();
         const user = await prisma.user.findUnique({
