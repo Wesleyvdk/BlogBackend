@@ -14,7 +14,6 @@ export function middleware(req: NextRequest) {
     if (req.method === "OPTIONS") {
         return new NextResponse(null, { status: 204 });
     }
-
     return res;
 }
 
