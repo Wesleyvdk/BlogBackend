@@ -27,7 +27,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ id: str
         const post = await prisma.post.findUnique({
             where: { id: Number(id) },
         });
-        console.log(`Prisma findUnique result for id ${id}:`, JSON.stringify(post), "(production debug)");
+        console.log(`Prisma findUnique result for id ${id}:`, post ? JSON.stringify(post) : 'null', "(production debug)");
 
         if (!post) {
             console.log(`Post with ID ${id} not found in database. Returning 404. (production debug)`);
