@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post(`/api/login`, async (req, res) => {
+app.post(`/api/login`, async (req: { body: { email: any; password: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { error: string; }): any; new(): any; }; }; json: (arg0: { message: string; userId: number; }) => void; }) => {
     const { email, password } = req.body;
     const user = await prisma.user.findUnique({ where: { email } });
 

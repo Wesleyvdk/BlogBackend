@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE "Post" ADD COLUMN     "Category" TEXT NOT NULL DEFAULT 'other';
+ALTER TABLE "Post" ADD COLUMN "category" TEXT NOT NULL DEFAULT 'other';
