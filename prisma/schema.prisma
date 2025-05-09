@@ -22,7 +22,7 @@ model Post {
   title     String
   content   String?
   tags      String[]
-  Category  String   @default("other")
+  category  String   @default("other")
   published Boolean  @default(false)
   viewCount Int      @default(0)
   author    User?    @relation(fields: [authorId], references: [id])
