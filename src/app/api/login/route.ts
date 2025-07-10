@@ -9,6 +9,13 @@ export async function POST(req: NextRequest) {
         const { email, password } = await req.json();
         const user = await prisma.user.findUnique({
             where: { email },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                isAdmin: true,
+                password: true,
+            },
         });
 
         if (!user) {
@@ -20,9 +27,12 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: "Password is invalid" }, { status: 401 });
         }
 
+        // Remove password from response
+        const { password: _, ...userResponse } = user;
+
         return NextResponse.json({
             token: "j29pX3fAfqmFMwpAVtk7HiElAliqXVLRt0g25oVifVPQSHLiqTXaAVQ6E04CUZqJ",
-            user,
+            user: userResponse,
         });
     } catch (error) {
         return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
