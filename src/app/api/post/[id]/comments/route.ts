@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { getCurrentUser } from "@/lib/auth";
 
 const prisma = new PrismaClient();
 
@@ -27,11 +28,33 @@ export async function POST(req: NextRequest, context: { params: Promise<{ id: st
 
   try {
     // Validate required fields
-    if (!author || !email || !content) {
+    if (!content) {
       return NextResponse.json(
-        { error: "Missing required fields: author, email, and content are required" },
+        { error: "Content is required" },
         { status: 400 }
       );
+    }
+
+    // Check if user is authenticated
+    const currentUser = await getCurrentUser(req);
+
+    // For authenticated users, use their data from the database
+    let finalAuthor = author;
+    let finalEmail = email;
+    let userId = null;
+
+    if (currentUser) {
+      finalAuthor = currentUser.name || currentUser.email; // Use name or email as fallback
+      finalEmail = currentUser.email;
+      userId = currentUser.id;
+    } else {
+      // For anonymous comments, require author and email
+      if (!author || !email) {
+        return NextResponse.json(
+          { error: "Name and email are required for anonymous comments" },
+          { status: 400 }
+        );
+      }
     }
 
     // Validate that the post exists
@@ -48,10 +71,11 @@ export async function POST(req: NextRequest, context: { params: Promise<{ id: st
 
     const newComment = await prisma.comment.create({
       data: {
-        author,
-        email,
+        author: finalAuthor,
+        email: finalEmail,
         content,
         postId: Number(id),
+        userId: userId,
       },
     });
 

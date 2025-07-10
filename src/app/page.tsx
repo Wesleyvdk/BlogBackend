@@ -1,6 +1,5 @@
-import { getApiRoutes } from "@/lib/getApiRoutes";
+﻿import { getApiRoutes } from "@/lib/getApiRoutes";
 import ApiRouteCard from "@/components/ApiRouteCard";
-
 export default async function Home() {
   let apiRoutes: any[] = [];
   try {
@@ -8,7 +7,6 @@ export default async function Home() {
   } catch (error) {
     console.error("Error fetching API routes:", error);
   }
-
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow">

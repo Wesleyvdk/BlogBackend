@@ -1,11 +1,9 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+﻿import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
 interface ApiRoute {
   path: string;
   methods: string[];
 }
-
 export default function ApiRouteCard({ route }: { route: ApiRoute }) {
   return (
     <Card>
@@ -37,7 +35,6 @@ export default function ApiRouteCard({ route }: { route: ApiRoute }) {
     </Card>
   );
 }
-
 function getMethodColor(method: string): string {
   switch (method.toUpperCase()) {
     case "GET":
